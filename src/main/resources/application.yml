@@ -1,0 +1,143 @@
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/NuzzleDB
+    username: root
+    password: '0000'
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      mode: never
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+        hbm2ddl:
+          auto: update
+        default_batch_fetch_size: 1000
+
+
+#  CREATE DATABASE NuzzleDB;
+#
+#-- Table: PET
+#  CREATE TABLE PET (
+#  PetID INT PRIMARY KEY,
+#  PetType VARCHAR(255),
+#  PetImg VARCHAR(255)
+#  );
+#-- Table: FAMILY
+#  CREATE TABLE FAMILY (
+#  FamilyID INT PRIMARY KEY,
+#  PetID INT,
+#  PetColor ENUM('Color1', 'Color2', 'Color3'),
+#  PetName VARCHAR(255),
+#  FOREIGN KEY (PetID) REFERENCES PET(PetID)
+#
+#  );
+#
+#-- Table: KEYWORD
+#  CREATE TABLE KEYWORD (
+#  KeywordID INT PRIMARY KEY,
+#  Keyword VARCHAR(255)
+#  );
+#
+#
+#-- Table: USER
+#  CREATE TABLE USER (
+#  UserID INT PRIMARY KEY,
+#  FamilyID INT,
+#  UserName VARCHAR(255),
+#  Gender ENUM('Male', 'Female'),
+#  SerialId VARCHAR(255) UNIQUE,
+#  Password VARCHAR(255),
+#  Role ENUM('Admin', 'User'),
+#  BirthDate DATE,
+#  FOREIGN KEY (FamilyID) REFERENCES FAMILY(FamilyID)
+#  );
+#-- Table: Question
+#  CREATE TABLE Question (
+#  QuestionID INT PRIMARY KEY,
+#  QuestionContents TEXT
+#  );
+#
+#
+#
+#
+#
+#-- Table: Picture
+#  CREATE TABLE Picture (
+#  PictureID INT PRIMARY KEY,
+#  UserID INT,
+#  PictureURL VARCHAR(255),
+#  UploadDate DATE,
+#  FOREIGN KEY (UserID) REFERENCES USER(UserID)
+#  );
+#
+#
+#
+#-- Table: Emoji
+#  CREATE TABLE Emoji (
+#  EmojiID INT PRIMARY KEY,
+#  EmojiImg VARCHAR(255)
+#  );
+#
+#-- Table: Alarm
+#  CREATE TABLE Alarm (
+#  AlarmID INT PRIMARY KEY,
+#  Contents TEXT,
+#  AlarmStatus BOOLEAN
+#  );
+#
+#-- Table: UserAlarm
+#  CREATE TABLE UserAlarm (
+#  UserID INT,
+#  AlarmID INT,
+#  AlarmTime DATE,
+#  PRIMARY KEY (UserID, AlarmID),
+#  FOREIGN KEY (UserID) REFERENCES USER(UserID),
+#  FOREIGN KEY (AlarmID) REFERENCES Alarm(AlarmID)
+#  );
+#
+#-- Table: FamilyQuestion
+#  CREATE TABLE FamilyQuestion (
+#  QuestionID INT,
+#  FamilyID INT,
+#  PRIMARY KEY (QuestionID, FamilyID),
+#  FOREIGN KEY (QuestionID) REFERENCES Question(QuestionID),
+#  FOREIGN KEY (FamilyID) REFERENCES FAMILY(FamilyID)
+#  );
+#-- Table: FAMILYKEYWORD
+#  CREATE TABLE FAMILYKEYWORD (
+#  KeywordID INT,
+#  FamilyID INT,
+#  PRIMARY KEY (KeywordID, FamilyID),
+#  FOREIGN KEY (FamilyID) REFERENCES FAMILY(FamilyID),
+#  FOREIGN KEY (KeywordID) REFERENCES KEYWORD(KeywordID)
+#
+#  );
+#
+#-- Table: PictureEmoji
+#  CREATE TABLE PictureEmoji (
+#  PictureID INT,
+#  EmojiID INT,
+#  PRIMARY KEY (PictureID, EmojiID),
+#  FOREIGN KEY (PictureID) REFERENCES Picture(PictureID),
+#  FOREIGN KEY (EmojiID) REFERENCES Emoji(EmojiID)
+#  );
+#
+#-- Table: Answer
+#  CREATE TABLE Answer (
+#  AnswerID INT PRIMARY KEY,
+#  QuestionID INT,
+#  FamilyID INT,
+#  UserID INT,
+#  AnswerContents TEXT,
+#  AnswerDate DATE,
+#  AnswerStatus BOOLEAN,
+#  FOREIGN KEY (QuestionID) REFERENCES FamilyQuestion(QuestionID),
+#  FOREIGN KEY (FamilyID) REFERENCES FamilyQuestion(FamilyID),
+#  FOREIGN KEY (UserID) REFERENCES USER(UserID)
+#  );
