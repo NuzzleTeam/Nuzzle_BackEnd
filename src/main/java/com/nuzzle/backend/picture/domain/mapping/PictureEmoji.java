@@ -10,13 +10,14 @@ import lombok.Data;
 public class PictureEmoji {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long pictureId;
+    @Column(name = "picture_emoji_id")
+    private Long pictureEmojiId;
 
     @ManyToOne
-    @JoinColumn(name = "emojiId")
+    @JoinColumn(name = "emoji_id")
     private Emoji emoji;
 
     @ManyToOne
-    @JoinColumn(name = "emojiId")
+    @JoinColumn(name = "picture_id")
     private Picture picture;
 }

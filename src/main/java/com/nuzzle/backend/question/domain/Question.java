@@ -11,8 +11,10 @@ import java.util.List;
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "question_id")
     private Long questionId;
 
+    @Column(name = "question_contents")
     private String questionContents;
 
     @OneToMany(mappedBy = "question")

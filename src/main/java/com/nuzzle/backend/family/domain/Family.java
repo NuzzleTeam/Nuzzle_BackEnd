@@ -13,15 +13,23 @@ import java.util.List;
 public class Family {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "family_id")
     private Long familyId;
 
+    @Column(name = "pet_name")
     private String petName;
-    private String petColor;
-    private String FamilyStatus;
 
+    @Column(name = "pet_color")
+    private String petColor;
+
+    @Column(name = "family_status")
+    private String familyStatus;
+
+    @Column(name = "invitation_code")
+    private String invitationCode;
 
     @ManyToOne
-    @JoinColumn(name = "petId")
+    @JoinColumn(name = "pet_id")
     private Pet pet;
 
     @OneToMany(mappedBy = "family")

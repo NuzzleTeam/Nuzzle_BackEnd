@@ -12,15 +12,19 @@ import java.util.List;
 public class Picture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "picture_id")
     private Long pictureId;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "picture")
     private List<PictureEmoji> pictureEmojis;
 
+    @Column(name = "picture_url")
     private String pictureURL;
+
+    @Column(name = "upload_date")
     private LocalDateTime uploadDate;
 }

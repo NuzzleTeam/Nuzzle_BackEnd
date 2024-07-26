@@ -23,121 +23,198 @@ spring:
 #  CREATE DATABASE NuzzleDB;
 #
 #-- Table: PET
-#  CREATE TABLE PET (
-#  PetID INT PRIMARY KEY,
-#  PetType VARCHAR(255),
-#  PetImg VARCHAR(255)
+#  CREATE TABLE pet (
+#  pet_id INT PRIMARY KEY AUTO_INCREMENT,
+#  pet_type VARCHAR(255),
+#  pet_img VARCHAR(255)
 #  );
-#-- Table: FAMILY
-#  CREATE TABLE FAMILY (
-#  FamilyID INT PRIMARY KEY,
-#  PetID INT,
-#  PetColor ENUM('Color1', 'Color2', 'Color3'),
-#  PetName VARCHAR(255),
-#  FOREIGN KEY (PetID) REFERENCES PET(PetID)
 #
+#-- Table: FAMILY
+#  CREATE TABLE family (
+#  family_id INT PRIMARY KEY AUTO_INCREMENT,
+#  pet_id INT,
+#  pet_color VARCHAR(255),
+#  pet_name VARCHAR(255),
+#  family_status VARCHAR(255),
+#  invitation_code VARCHAR(255),
+#  FOREIGN KEY (pet_id) REFERENCES pet(pet_id)
 #  );
 #
 #-- Table: KEYWORD
-#  CREATE TABLE KEYWORD (
-#  KeywordID INT PRIMARY KEY,
-#  Keyword VARCHAR(255)
+#  CREATE TABLE keyword (
+#  keyword_id INT PRIMARY KEY AUTO_INCREMENT,
+#  keyword VARCHAR(255)
 #  );
-#
 #
 #-- Table: USER
-#  CREATE TABLE USER (
-#  UserID INT PRIMARY KEY,
-#  FamilyID INT,
-#  UserName VARCHAR(255),
-#  Gender ENUM('Male', 'Female'),
-#  SerialId VARCHAR(255) UNIQUE,
-#  Password VARCHAR(255),
-#  Role ENUM('Admin', 'User'),
-#  BirthDate DATE,
-#  FOREIGN KEY (FamilyID) REFERENCES FAMILY(FamilyID)
+#  CREATE TABLE user (
+#  user_id INT PRIMARY KEY AUTO_INCREMENT,
+#  family_id INT,
+#  user_name VARCHAR(255),
+#  gender VARCHAR(255),
+#  serial_id VARCHAR(255) UNIQUE,
+#  password VARCHAR(255),
+#  role VARCHAR(255),
+#  birth_date DATE,
+#  FOREIGN KEY (family_id) REFERENCES family(family_id)
 #  );
+#
 #-- Table: Question
-#  CREATE TABLE Question (
-#  QuestionID INT PRIMARY KEY,
-#  QuestionContents TEXT
+#  CREATE TABLE question (
+#  question_id INT PRIMARY KEY AUTO_INCREMENT,
+#  question_contents TEXT
 #  );
-#
-#
-#
-#
 #
 #-- Table: Picture
-#  CREATE TABLE Picture (
-#  PictureID INT PRIMARY KEY,
-#  UserID INT,
-#  PictureURL VARCHAR(255),
-#  UploadDate DATE,
-#  FOREIGN KEY (UserID) REFERENCES USER(UserID)
+#  CREATE TABLE picture (
+#  picture_id INT PRIMARY KEY AUTO_INCREMENT,
+#  user_id INT,
+#  picture_url VARCHAR(255),
+#  upload_date TIMESTAMP,
+#  FOREIGN KEY (user_id) REFERENCES user(user_id)
 #  );
 #
-#
-#
 #-- Table: Emoji
-#  CREATE TABLE Emoji (
-#  EmojiID INT PRIMARY KEY,
-#  EmojiImg VARCHAR(255)
+#  CREATE TABLE emoji (
+#  emoji_id INT PRIMARY KEY AUTO_INCREMENT,
+#  emoji_img VARCHAR(255)
 #  );
 #
 #-- Table: Alarm
-#  CREATE TABLE Alarm (
-#  AlarmID INT PRIMARY KEY,
-#  Contents TEXT,
-#  AlarmStatus BOOLEAN
+#  CREATE TABLE alarm (
+#  alarm_id INT PRIMARY KEY AUTO_INCREMENT,
+#  contents TEXT,
+#  alarm_status BOOLEAN
 #  );
 #
 #-- Table: UserAlarm
-#  CREATE TABLE UserAlarm (
-#  UserID INT,
-#  AlarmID INT,
-#  AlarmTime DATE,
-#  PRIMARY KEY (UserID, AlarmID),
-#  FOREIGN KEY (UserID) REFERENCES USER(UserID),
-#  FOREIGN KEY (AlarmID) REFERENCES Alarm(AlarmID)
+#  CREATE TABLE user_alarm (
+#  user_alarm_id INT PRIMARY KEY AUTO_INCREMENT,
+#  user_id INT,
+#  alarm_id INT,
+#  alarm_time TIMESTAMP,
+#  FOREIGN KEY (user_id) REFERENCES user(user_id),
+#  FOREIGN KEY (alarm_id) REFERENCES alarm(alarm_id)
 #  );
 #
 #-- Table: FamilyQuestion
-#  CREATE TABLE FamilyQuestion (
-#  QuestionID INT,
-#  FamilyID INT,
-#  PRIMARY KEY (QuestionID, FamilyID),
-#  FOREIGN KEY (QuestionID) REFERENCES Question(QuestionID),
-#  FOREIGN KEY (FamilyID) REFERENCES FAMILY(FamilyID)
+#  CREATE TABLE family_question (
+#  family_id INT,
+#  question_id INT,
+#  PRIMARY KEY (family_id, question_id),
+#  FOREIGN KEY (family_id) REFERENCES family(family_id),
+#  FOREIGN KEY (question_id) REFERENCES question(question_id)
 #  );
-#-- Table: FAMILYKEYWORD
-#  CREATE TABLE FAMILYKEYWORD (
-#  KeywordID INT,
-#  FamilyID INT,
-#  PRIMARY KEY (KeywordID, FamilyID),
-#  FOREIGN KEY (FamilyID) REFERENCES FAMILY(FamilyID),
-#  FOREIGN KEY (KeywordID) REFERENCES KEYWORD(KeywordID)
 #
+#-- Table: FAMILYKEYWORD
+#  CREATE TABLE family_keyword (
+#  keyword_id INT,
+#  family_id INT,
+#  PRIMARY KEY (keyword_id, family_id),
+#  FOREIGN KEY (family_id) REFERENCES family(family_id),
+#  FOREIGN KEY (keyword_id) REFERENCES keyword(keyword_id)
 #  );
 #
 #-- Table: PictureEmoji
-#  CREATE TABLE PictureEmoji (
-#  PictureID INT,
-#  EmojiID INT,
-#  PRIMARY KEY (PictureID, EmojiID),
-#  FOREIGN KEY (PictureID) REFERENCES Picture(PictureID),
-#  FOREIGN KEY (EmojiID) REFERENCES Emoji(EmojiID)
+#  CREATE TABLE picture_emoji (
+#  picture_emoji_id INT PRIMARY KEY AUTO_INCREMENT,
+#  picture_id INT,
+#  emoji_id INT,
+#  FOREIGN KEY (picture_id) REFERENCES picture(picture_id),
+#  FOREIGN KEY (emoji_id) REFERENCES emoji(emoji_id)
 #  );
 #
 #-- Table: Answer
-#  CREATE TABLE Answer (
-#  AnswerID INT PRIMARY KEY,
-#  QuestionID INT,
-#  FamilyID INT,
-#  UserID INT,
-#  AnswerContents TEXT,
-#  AnswerDate DATE,
-#  AnswerStatus BOOLEAN,
-#  FOREIGN KEY (QuestionID) REFERENCES FamilyQuestion(QuestionID),
-#  FOREIGN KEY (FamilyID) REFERENCES FamilyQuestion(FamilyID),
-#  FOREIGN KEY (UserID) REFERENCES USER(UserID)
+#  CREATE TABLE answer (
+#  answer_id INT PRIMARY KEY AUTO_INCREMENT,
+#  question_id INT,
+#  family_id INT,
+#  user_id INT,
+#  answer_contents TEXT,
+#  answer_date TIMESTAMP,
+#  answer_status BOOLEAN,
+#  FOREIGN KEY (question_id) REFERENCES question(question_id),
+#  FOREIGN KEY (family_id) REFERENCES family(family_id),
+#  FOREIGN KEY (user_id) REFERENCES user(user_id)
 #  );
+#
+#
+#  -- Inserting data into PET table
+#  INSERT INTO pet (pet_type, pet_img) VALUES
+#  ('Dog', 'dog1.jpg'),
+#  ('Cat', 'cat1.jpg'),
+#  ('Bird', 'bird1.jpg');
+#
+#  -- Inserting data into FAMILY table
+#  INSERT INTO family (pet_id, pet_color, pet_name, family_status, invitation_code) VALUES
+#  (1, 'Color1', 'Buddy', 'Active', 'abcd-1234-efgh-5678'),
+#  (2, 'Color2', 'Whiskers', 'Active', 'ijkl-9101-mnop-1121'),
+#  (3, 'Color3', 'Tweety', 'Active', 'qrst-3141-uvwx-5161');
+#
+#  -- Inserting data into KEYWORD table
+#  INSERT INTO keyword (keyword) VALUES
+#  ('Playful'),
+#  ('Lazy'),
+#  ('Noisy');
+#
+#  -- Inserting data into USER table
+#  INSERT INTO user (family_id, user_name, gender, serial_id, password, role, birth_date) VALUES
+#  (1, 'Alice', 'Female', 'U001', 'pass123', 'Admin', '1990-01-01'),
+#  (2, 'Bob', 'Male', 'U002', 'pass456', 'User', '1985-05-15'),
+#  (3, 'Charlie', 'Male', 'U003', 'pass789', 'User', '2000-07-20');
+#
+#  -- Inserting data into Question table
+#  INSERT INTO question (question_contents) VALUES
+#  ('What is your pet\'s favorite activity?'),
+#  ('How often do you take your pet to the vet?'),
+#  ('What do you feed your pet?');
+#
+#  -- Inserting data into Picture table
+#  INSERT INTO picture (user_id, picture_url, upload_date) VALUES
+#  (1, 'pic1.jpg', '2024-01-01 00:00:00'),
+#  (2, 'pic2.jpg', '2024-02-01 00:00:00'),
+#  (3, 'pic3.jpg', '2024-03-01 00:00:00');
+#
+#  -- Inserting data into Emoji table
+#  INSERT INTO emoji (emoji_img) VALUES
+#  ('smile.png'),
+#  ('sad.png'),
+#  ('heart.png');
+#
+#  -- Inserting data into Alarm table
+#  INSERT INTO alarm (contents, alarm_status) VALUES
+#  ('Time to feed your pet', TRUE),
+#  ('Vet appointment tomorrow', FALSE),
+#  ('Pet grooming day', TRUE);
+#
+#  -- Inserting data into UserAlarm table
+#  INSERT INTO user_alarm (user_id, alarm_id, alarm_time) VALUES
+#  (1, 1, '2024-01-01 08:00:00'),
+#  (2, 2, '2024-02-01 10:00:00'),
+#  (3, 3, '2024-03-01 09:00:00');
+#
+#  -- Inserting data into FamilyQuestion table
+#  INSERT INTO family_question (family_id, question_id) VALUES
+#  (1, 1),
+#  (2, 2),
+#  (3, 3);
+#
+#  -- Inserting data into FAMILYKEYWORD table
+#  INSERT INTO family_keyword (keyword_id, family_id) VALUES
+#  (1, 1),
+#  (2, 2),
+#  (3, 3);
+#
+#  -- Inserting data into PictureEmoji table
+#  INSERT INTO picture_emoji (picture_id, emoji_id) VALUES
+#  (1, 1),
+#  (2, 2),
+#  (3, 3);
+#
+#  -- Inserting data into Answer table
+#  INSERT INTO answer (question_id, family_id, user_id, answer_contents, answer_date, answer_status) VALUES
+#  (1, 1, 1, 'Playing fetch', '2024-01-02 00:00:00', TRUE),
+#  (2, 2, 2, 'Twice a year', '2024-02-02 00:00:00', TRUE),
+#  (3, 3, 3, 'Seeds and fruits', '2024-03-02 00:00:00', TRUE);
+#
+#
