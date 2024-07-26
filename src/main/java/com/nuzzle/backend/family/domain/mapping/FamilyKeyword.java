@@ -10,13 +10,14 @@ import lombok.Data;
 public class FamilyKeyword {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long keywordId;
+    @Column(name = "family_keyword_id")
+    private Long familyKeywordId;
 
     @ManyToOne
-    @JoinColumn(name = "familyId")
+    @JoinColumn(name = "family_id")
     private Family family;
 
     @ManyToOne
-    @JoinColumn(name = "keywordId")
+    @JoinColumn(name = "keyword_id")
     private Keyword keyword;
 }

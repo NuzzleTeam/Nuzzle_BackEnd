@@ -11,13 +11,15 @@ import java.util.List;
 public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "pet_id")
     private Long petId;
 
+    @Column(name = "pet_type")
     private String petType;
+
+    @Column(name = "pet_img")
     private String petImg;
 
     @OneToMany(mappedBy = "pet")
     private List<Family> families;
-
-
 }

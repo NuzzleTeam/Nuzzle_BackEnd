@@ -12,16 +12,17 @@ import java.time.LocalDateTime;
 public class UserAlarm {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    @Column(name = "user_alarm_id")
+    private Long userAlarmId;
 
     @ManyToOne
-    @JoinColumn(name = "alarmId")
+    @JoinColumn(name = "alarm_id")
     private Alarm alarm;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "alarm_time")
     private LocalDateTime alarmTime;
-
 }

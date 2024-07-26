@@ -12,16 +12,18 @@ import java.util.List;
 @Data
 public class FamilyQuestion {
     @EmbeddedId
-    private FamilyQuestionId id;
+    private FamilyQuestionId familyQuestionId;
 
     @ManyToOne
-    @JoinColumn(name = "familyId")
+    @MapsId("familyId")
+    @JoinColumn(name = "family_id")
     private Family family;
 
     @ManyToOne
-    @JoinColumn(name = "questionId")
+    @MapsId("questionId")
+    @JoinColumn(name = "question_id")
     private Question question;
 
-    @OneToMany(mappedBy = "answer")
+    @OneToMany(mappedBy = "familyQuestion")
     private List<Answer> answers;
 }

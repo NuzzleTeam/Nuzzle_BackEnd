@@ -14,10 +14,11 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long userId;
 
     @ManyToOne
-    @JoinColumn(name = "familyId")
+    @JoinColumn(name = "family_id")
     private Family family;
 
     @OneToMany(mappedBy = "user")
@@ -29,10 +30,21 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Picture> pictures;
 
+    @Column(name = "user_name")
     private String userName;
+
+    @Column(name = "gender")
     private String gender;
+
+    @Column(name = "serial_id")
     private String serialId;
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "role")
     private String role;
+
+    @Column(name = "birth_date")
     private LocalDateTime birthDate;
 }

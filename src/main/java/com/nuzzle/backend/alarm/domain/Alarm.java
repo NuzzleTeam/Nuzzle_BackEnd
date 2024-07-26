@@ -10,9 +10,13 @@ import java.util.List;
 public class Alarm {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "alarm_id")
     private Long alarmId;
 
+    @Column(name = "contents")
     private String contents;
+
+    @Column(name = "alarm_status")
     private Boolean alarmStatus;
 
     @OneToMany(mappedBy = "alarm")
