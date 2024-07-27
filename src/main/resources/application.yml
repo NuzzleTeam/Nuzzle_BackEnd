@@ -134,12 +134,12 @@ spring:
 #  answer_contents VARCHAR(255),
 #  answer_date TIMESTAMP,
 #  answer_status BOOLEAN,
-#  FOREIGN KEY (question_id) REFERENCES question(question_id),
-#  FOREIGN KEY (family_id) REFERENCES family_question(family_id, question_id),
+#  FOREIGN KEY (question_id) REFERENCES family_question(question_id),
+#  FOREIGN KEY (family_id) REFERENCES family_question(family_id),
 #  FOREIGN KEY (user_id) REFERENCES user(user_id)
 #  );
 #
-#---------------------- 더미데이터 부분------------------------
+#  #  ---------------------- 더미데이터 부분------------------------
 #  -- Inserting data into PET table
 #  INSERT INTO pet (pet_type, pet_img) VALUES
 #  ('Dog', 'dog1.jpg'),
