@@ -18,21 +18,22 @@ spring:
         hbm2ddl:
           auto: update
         default_batch_fetch_size: 1000
-
-
+  
 #  CREATE DATABASE NuzzleDB;
+#
+#  USE NuzzleDB;
 #
 #-- Table: PET
 #  CREATE TABLE pet (
-#  pet_id INT PRIMARY KEY AUTO_INCREMENT,
+#  pet_id BIGINT PRIMARY KEY AUTO_INCREMENT,
 #  pet_type VARCHAR(255),
 #  pet_img VARCHAR(255)
 #  );
 #
 #-- Table: FAMILY
 #  CREATE TABLE family (
-#  family_id INT PRIMARY KEY AUTO_INCREMENT,
-#  pet_id INT,
+#  family_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+#  pet_id BIGINT,
 #  pet_color VARCHAR(255),
 #  pet_name VARCHAR(255),
 #  family_status VARCHAR(255),
@@ -42,33 +43,33 @@ spring:
 #
 #-- Table: KEYWORD
 #  CREATE TABLE keyword (
-#  keyword_id INT PRIMARY KEY AUTO_INCREMENT,
+#  keyword_id BIGINT PRIMARY KEY AUTO_INCREMENT,
 #  keyword VARCHAR(255)
 #  );
 #
 #-- Table: USER
 #  CREATE TABLE user (
-#  user_id INT PRIMARY KEY AUTO_INCREMENT,
-#  family_id INT,
+#  user_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+#  family_id BIGINT,
 #  user_name VARCHAR(255),
 #  gender VARCHAR(255),
 #  serial_id VARCHAR(255) UNIQUE,
 #  password VARCHAR(255),
 #  role VARCHAR(255),
-#  birth_date DATE,
+#  birth_date DATETIME(6),
 #  FOREIGN KEY (family_id) REFERENCES family(family_id)
 #  );
 #
 #-- Table: Question
 #  CREATE TABLE question (
-#  question_id INT PRIMARY KEY AUTO_INCREMENT,
-#  question_contents TEXT
+#  question_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+#  question_contents VARCHAR(255)
 #  );
 #
 #-- Table: Picture
 #  CREATE TABLE picture (
-#  picture_id INT PRIMARY KEY AUTO_INCREMENT,
-#  user_id INT,
+#  picture_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+#  user_id BIGINT,
 #  picture_url VARCHAR(255),
 #  upload_date TIMESTAMP,
 #  FOREIGN KEY (user_id) REFERENCES user(user_id)
@@ -76,22 +77,22 @@ spring:
 #
 #-- Table: Emoji
 #  CREATE TABLE emoji (
-#  emoji_id INT PRIMARY KEY AUTO_INCREMENT,
+#  emoji_id BIGINT PRIMARY KEY AUTO_INCREMENT,
 #  emoji_img VARCHAR(255)
 #  );
 #
 #-- Table: Alarm
 #  CREATE TABLE alarm (
-#  alarm_id INT PRIMARY KEY AUTO_INCREMENT,
-#  contents TEXT,
+#  alarm_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+#  contents VARCHAR(255),
 #  alarm_status BOOLEAN
 #  );
 #
 #-- Table: UserAlarm
 #  CREATE TABLE user_alarm (
-#  user_alarm_id INT PRIMARY KEY AUTO_INCREMENT,
-#  user_id INT,
-#  alarm_id INT,
+#  user_alarm_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+#  user_id BIGINT,
+#  alarm_id BIGINT,
 #  alarm_time TIMESTAMP,
 #  FOREIGN KEY (user_id) REFERENCES user(user_id),
 #  FOREIGN KEY (alarm_id) REFERENCES alarm(alarm_id)
@@ -99,8 +100,8 @@ spring:
 #
 #-- Table: FamilyQuestion
 #  CREATE TABLE family_question (
-#  family_id INT,
-#  question_id INT,
+#  family_id BIGINT,
+#  question_id BIGINT,
 #  PRIMARY KEY (family_id, question_id),
 #  FOREIGN KEY (family_id) REFERENCES family(family_id),
 #  FOREIGN KEY (question_id) REFERENCES question(question_id)
@@ -108,37 +109,37 @@ spring:
 #
 #-- Table: FAMILYKEYWORD
 #  CREATE TABLE family_keyword (
-#  keyword_id INT,
-#  family_id INT,
-#  PRIMARY KEY (keyword_id, family_id),
+#  family_keyword_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+#  keyword_id BIGINT,
+#  family_id BIGINT,
 #  FOREIGN KEY (family_id) REFERENCES family(family_id),
 #  FOREIGN KEY (keyword_id) REFERENCES keyword(keyword_id)
 #  );
 #
 #-- Table: PictureEmoji
 #  CREATE TABLE picture_emoji (
-#  picture_emoji_id INT PRIMARY KEY AUTO_INCREMENT,
-#  picture_id INT,
-#  emoji_id INT,
+#  picture_emoji_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+#  picture_id BIGINT,
+#  emoji_id BIGINT,
 #  FOREIGN KEY (picture_id) REFERENCES picture(picture_id),
 #  FOREIGN KEY (emoji_id) REFERENCES emoji(emoji_id)
 #  );
 #
 #-- Table: Answer
 #  CREATE TABLE answer (
-#  answer_id INT PRIMARY KEY AUTO_INCREMENT,
-#  question_id INT,
-#  family_id INT,
-#  user_id INT,
-#  answer_contents TEXT,
+#  answer_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+#  question_id BIGINT,
+#  family_id BIGINT,
+#  user_id BIGINT,
+#  answer_contents VARCHAR(255),
 #  answer_date TIMESTAMP,
 #  answer_status BOOLEAN,
 #  FOREIGN KEY (question_id) REFERENCES question(question_id),
-#  FOREIGN KEY (family_id) REFERENCES family(family_id),
+#  FOREIGN KEY (family_id) REFERENCES family_question(family_id, question_id),
 #  FOREIGN KEY (user_id) REFERENCES user(user_id)
 #  );
 #
-#
+#---------------------- 더미데이터 부분------------------------
 #  -- Inserting data into PET table
 #  INSERT INTO pet (pet_type, pet_img) VALUES
 #  ('Dog', 'dog1.jpg'),
@@ -159,9 +160,9 @@ spring:
 #
 #  -- Inserting data into USER table
 #  INSERT INTO user (family_id, user_name, gender, serial_id, password, role, birth_date) VALUES
-#  (1, 'Alice', 'Female', 'U001', 'pass123', 'Admin', '1990-01-01'),
-#  (2, 'Bob', 'Male', 'U002', 'pass456', 'User', '1985-05-15'),
-#  (3, 'Charlie', 'Male', 'U003', 'pass789', 'User', '2000-07-20');
+#  (1, 'Alice', 'Female', 'U001', 'pass123', 'Admin', '1990-01-01 00:00:00'),
+#  (2, 'Bob', 'Male', 'U002', 'pass456', 'User', '1985-05-15 00:00:00'),
+#  (3, 'Charlie', 'Male', 'U003', 'pass789', 'User', '2000-07-20 00:00:00');
 #
 #  -- Inserting data into Question table
 #  INSERT INTO question (question_contents) VALUES
@@ -216,5 +217,3 @@ spring:
 #  (1, 1, 1, 'Playing fetch', '2024-01-02 00:00:00', TRUE),
 #  (2, 2, 2, 'Twice a year', '2024-02-02 00:00:00', TRUE),
 #  (3, 3, 3, 'Seeds and fruits', '2024-03-02 00:00:00', TRUE);
-#
-#
