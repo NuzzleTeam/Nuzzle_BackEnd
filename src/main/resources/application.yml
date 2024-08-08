@@ -1,9 +1,9 @@
 
 spring:
   datasource:
-    url: ${MYSQL_URL}
-    username: ${MYSQL_NAME}
-    password: ${MYSQL_PW}
+    url: jdbc:mysql://nuzzledb.c7yys0au65if.ap-northeast-2.rds.amazonaws.com:3306/NuzzleDB
+    username: nuzzle
+    password: nuzzle0000!
     driver-class-name: com.mysql.cj.jdbc.Driver
   sql:
     init:
