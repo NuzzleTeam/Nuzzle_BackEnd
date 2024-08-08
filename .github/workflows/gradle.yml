@@ -1,4 +1,3 @@
-
 name: Java CI/CD with Gradle # 워크플로우 이름
 
 on: # 언제 실행할 것인지에 대한 설정
