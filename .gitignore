@@ -1,12 +1,13 @@
 #yml 파일
-application.yml
+src/main/resources/application.yml
+.gradle
 
 #환경변수
 .env
 
 ###
 HELP.md
-.gradle
+
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
