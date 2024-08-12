@@ -1,5 +1,5 @@
 ## 🐰 NUZZLE BACKEND REPOSITORY
-<br>
+HELLO! This is NUZZLE BACKEND REPOSITORY
 
 ## Commit Convention
 -   feat : 새로운 기능 추가
