@@ -1,9 +1,12 @@
 package com.nuzzle.backend.family.service.impl;
 
 import com.nuzzle.backend.family.domain.Family;
+import com.nuzzle.backend.family.dto.FamilyDTO;
 import com.nuzzle.backend.family.repository.FamilyRepository;
 import com.nuzzle.backend.family.service.FamilyService;
+import com.nuzzle.backend.pet.dto.PetDTO;
 import com.nuzzle.backend.user.domain.User;
+import com.nuzzle.backend.user.dto.UserDTO;
 import com.nuzzle.backend.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class FamilyServiceImpl implements FamilyService {
@@ -23,7 +27,12 @@ public class FamilyServiceImpl implements FamilyService {
 
     @Transactional
     @Override
-    public Family createFamily(User user) {
+    public FamilyDTO createFamily(User user) {
+        // 이미 가족이 있는 경우 예외 발생
+        if (user.getFamily() != null) {
+            throw new IllegalStateException("이미 가족이 있는 유저입니다.");
+        }
+
         // 새로운 가족 생성
         Family family = new Family();
         family.setFamilyStatus("Active"); // 가족 상태 설정
@@ -34,7 +43,7 @@ public class FamilyServiceImpl implements FamilyService {
         user.setFamily(family);
         userRepository.save(user);
 
-        return family;
+        return convertToDTO(family);
     }
 
     @Transactional
@@ -89,5 +98,44 @@ public class FamilyServiceImpl implements FamilyService {
         // 가족 ID로 초대 코드 가져오기
         Family family = getFamily(familyId);
         return family.getInvitationCode();
+    }
+
+    //----------------------------- DTO 형태로 변환하는 메소드 분리 구간 ------------------------------------
+    private FamilyDTO convertToDTO(Family family) {
+        FamilyDTO familyDTO = new FamilyDTO();
+        familyDTO.setFamilyId(family.getFamilyId());
+        familyDTO.setPetName(family.getPetName());
+        familyDTO.setPetColor(family.getPetColor());
+        familyDTO.setFamilyStatus(family.getFamilyStatus());
+        familyDTO.setInvitationCode(family.getInvitationCode());
+
+        if (family.getPet() != null) {
+            PetDTO petDTO = new PetDTO();
+            petDTO.setPetId(family.getPet().getPetId());
+            petDTO.setPetType(family.getPet().getPetType());
+            petDTO.setPetImg(family.getPet().getPetImg());
+            familyDTO.setPet(petDTO);
+        }
+
+        if (family.getUsers() != null) {
+            List<UserDTO> userDTOs = family.getUsers().stream().map(this::convertToUserDTO).collect(Collectors.toList());
+            familyDTO.setUsers(userDTOs);
+        }
+
+        return familyDTO;
+    }
+
+    private UserDTO convertToUserDTO(User user) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserId(user.getUserId());
+        userDTO.setUserName(user.getUserName());
+        userDTO.setGender(user.getGender());
+        userDTO.setSerialId(user.getSerialId());
+        userDTO.setPassword(user.getPassword());
+        userDTO.setRole(user.getRole());
+        userDTO.setBirthDate(user.getBirthDate().toString());
+
+        // 사용자 DTO는 Family를 포함하지 않음
+        return userDTO;
     }
 }
