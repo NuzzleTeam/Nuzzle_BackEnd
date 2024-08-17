@@ -1,6 +1,7 @@
 package com.nuzzle.backend.family.service;
 
 import com.nuzzle.backend.family.domain.Family;
+import com.nuzzle.backend.family.dto.FamilyDTO;
 import com.nuzzle.backend.user.domain.User;
 
 import java.util.List;
@@ -12,5 +13,6 @@ public interface FamilyService {
     Family getFamily(Long familyId); // 가족 정보를 가져오는 메서드
     List<User> getFamilyMembers(Long familyId); // 가족 구성원을 가져오는 메서드
     String getInvitationCode(Long familyId); // 가족 초대 코드를 가져오는 메서드
+    FamilyDTO setPetName(Long familyId, String petName); // 펫 이름 설정 메서드
 
 }
