@@ -1,10 +1,12 @@
 package com.nuzzle.backend.family.controller;
 
 import com.nuzzle.backend.family.domain.Family;
+import com.nuzzle.backend.family.dto.FamilyDTO;
 import com.nuzzle.backend.family.service.FamilyService;
 import com.nuzzle.backend.user.domain.User;
 import com.nuzzle.backend.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -98,5 +100,12 @@ public class FamilyController {
         response.put("invitation_code", invitation_code);
 
         return response;
+    }
+
+    // 랜덤 펫을 가족에 할당
+    @PatchMapping("/{familyId}/assign-random-pet")
+    public ResponseEntity<FamilyDTO> assignRandomPetToFamily(@PathVariable Long familyId) {
+        FamilyDTO familyDTO = family_service.assignRandomPetToFamily(familyId);
+        return ResponseEntity.ok(familyDTO);
     }
 }
