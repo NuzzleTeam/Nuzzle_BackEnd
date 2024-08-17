@@ -1,10 +1,13 @@
 package com.nuzzle.backend.family.controller;
 
 import com.nuzzle.backend.family.domain.Family;
+import com.nuzzle.backend.family.dto.FamilyDTO;
 import com.nuzzle.backend.family.service.FamilyService;
 import com.nuzzle.backend.user.domain.User;
 import com.nuzzle.backend.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -57,16 +60,20 @@ public class FamilyController {
     }
 
     @PostMapping("/leave")
-    public Map<String, String> leaveFamily(@RequestParam Long user_id) {
+    public ResponseEntity<Map<String, String>> leaveFamily(@RequestBody FamilyDTO.LeaveFamilyRequest request) {
         // 유저 정보 가져오기
-        User user = user_service.getUserById(user_id);
-        // 가족 탈퇴
-        family_service.leaveFamily(user);
+        User user = user_service.getUserById(request.getUserId());
 
-        // 응답 메시지 생성
         Map<String, String> response = new HashMap<>();
-        response.put("message", "Successfully left the family.");
-        return response;
+        try {
+            // 가족 탈퇴
+            family_service.leaveFamily(user);
+            response.put("message", "성공적으로 가족을 탈퇴했습니다.");
+            return ResponseEntity.ok(response);
+        } catch (IllegalStateException e) {
+            response.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
     }
 
     @GetMapping("/{family_id}")
