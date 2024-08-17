@@ -87,7 +87,7 @@ public class FamilyServiceImpl implements FamilyService {
     @Override
     public String getInvitationCode(Long familyId) {
         // 가족 ID로 초대 코드 가져오기
-        Family family = getFamily(familyId);
+        Family family = familyRepository.findById(familyId).orElseThrow(() -> new IllegalArgumentException("가족을 찾지 못했습니다."));
         return family.getInvitationCode();
     }
 }
