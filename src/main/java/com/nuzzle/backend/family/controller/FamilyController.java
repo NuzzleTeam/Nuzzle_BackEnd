@@ -1,10 +1,13 @@
 package com.nuzzle.backend.family.controller;
 
 import com.nuzzle.backend.family.domain.Family;
+import com.nuzzle.backend.family.dto.FamilyDTO;
 import com.nuzzle.backend.family.service.FamilyService;
 import com.nuzzle.backend.user.domain.User;
 import com.nuzzle.backend.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -98,5 +101,19 @@ public class FamilyController {
         response.put("invitation_code", invitation_code);
 
         return response;
+    }
+
+    // 가족별 펫 이름 설정
+    @PostMapping("/{familyId}/pet-name")
+    public ResponseEntity<FamilyDTO> setPetName(@PathVariable Long familyId, @RequestBody String petName) {
+        FamilyDTO familyDTO = family_service.setPetName(familyId, petName);
+        return ResponseEntity.status(HttpStatus.CREATED).body(familyDTO);
+    }
+
+    // 가족별 펫 이름 수정
+    @PatchMapping("/{familyId}/pet-name")
+    public ResponseEntity<FamilyDTO> updatePetName(@PathVariable Long familyId, @RequestBody String petName) {
+        FamilyDTO familyDTO = family_service.updatePetName(familyId, petName);
+        return ResponseEntity.ok(familyDTO);
     }
 }
