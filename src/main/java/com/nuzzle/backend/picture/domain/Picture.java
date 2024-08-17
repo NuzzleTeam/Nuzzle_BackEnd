@@ -4,6 +4,8 @@ import com.nuzzle.backend.picture.domain.mapping.PictureEmoji;
 import com.nuzzle.backend.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Data;
+
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -27,4 +29,6 @@ public class Picture {
 
     @Column(name = "upload_date")
     private LocalDateTime uploadDate;
+
+
 }
