@@ -1,12 +1,20 @@
 package com.nuzzle.backend.user.controller;
 
-import com.html.cifarm.dto.global.ResponseDto;
-import com.html.cifarm.dto.request.AuthSignUpDto;
-import com.html.cifarm.dto.request.OauthLoginDto;
-import com.html.cifarm.service.AuthService;
+import com.nuzzle.backend.global.annotation.UserId;
+import com.nuzzle.backend.global.constants.Constants;
+import com.nuzzle.backend.global.dto.JwtTokenDto;
+import com.nuzzle.backend.global.dto.ResponseDto;
+import com.nuzzle.backend.global.exception.CommonException;
+import com.nuzzle.backend.global.exception.ErrorCode;
+import com.nuzzle.backend.global.utility.HeaderUtil;
+import com.nuzzle.backend.user.service.AuthService;
+import com.nuzzle.backend.user.dto.AuthSignUpDto;
+import com.nuzzle.backend.user.dto.OauthLoginDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -37,10 +45,25 @@ public class AuthController {
         return ResponseDto.ok(null);
     }
 
-    @PostMapping("/auth/login")
-    @Operation(summary = "로그인", description = "클라이언트 사이드 인증을 통한 로그인")
+    @PostMapping("/oauth/login")
+    @Operation(summary = "소셜로그인", description = "클라이언트 사이드 인증을 통한 소셜 로그인")
     @Schema(name = "login", description = "로그인")
     public ResponseDto<?> login(@RequestBody OauthLoginDto userloginDto) {
         return ResponseDto.ok(authService.login(userloginDto));
     }
+
+    @PostMapping("/auth/reissue")
+    @Operation(summary = "Access 토큰 재발급", description = "Access 토큰을 재발급합니다.")
+    public ResponseDto<?> reissue(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            @UserId Long userId) {
+        String refreshToken = HeaderUtil.refineHeader(request, Constants.AUTHORIZATION_HEADER, Constants.BEARER_PREFIX)
+                .orElseThrow(() -> new CommonException(ErrorCode.MISSING_REQUEST_HEADER));
+
+        JwtTokenDto jwtTokenDto = authService.reissue(userId, refreshToken);
+
+        return ResponseDto.ok(jwtTokenDto);
+    }
+
 }
