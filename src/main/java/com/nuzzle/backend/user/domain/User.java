@@ -5,6 +5,8 @@ import com.nuzzle.backend.family.domain.Family;
 import com.nuzzle.backend.global.dto.type.EFamilyRole;
 import com.nuzzle.backend.global.dto.type.EProvider;
 import com.nuzzle.backend.global.dto.type.ERole;
+import com.nuzzle.backend.global.exception.CommonException;
+import com.nuzzle.backend.global.exception.ErrorCode;
 import com.nuzzle.backend.picture.domain.Picture;
 import com.nuzzle.backend.user.domain.mapping.UserAlarm;
 import com.nuzzle.backend.user.dto.AuthSignUpDto;
@@ -15,6 +17,7 @@ import org.springframework.data.annotation.CreatedDate;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -121,6 +124,16 @@ public class User {
                 .gender(authSignUpDto.gender())
                 .birthDate(authSignUpDto.birthDate())
                 .build();
+    }
+
+    public void updatePassword(String password) {
+
+        if (Objects.equals(this.password, password)) {
+            throw new CommonException(ErrorCode.PASSWORD_SAME_AS_CURRENT);
+        }
+        if (password !=null && !Objects.equals(this.password, password)) {
+            this.password = password;
+        }
     }
 
 }
