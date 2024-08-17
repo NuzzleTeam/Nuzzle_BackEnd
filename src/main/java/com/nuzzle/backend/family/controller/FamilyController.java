@@ -1,11 +1,15 @@
 package com.nuzzle.backend.family.controller;
 
 import com.nuzzle.backend.family.domain.Family;
+import com.nuzzle.backend.family.dto.FamilyDTO;
 import com.nuzzle.backend.family.service.FamilyService;
 import com.nuzzle.backend.user.domain.User;
 import com.nuzzle.backend.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -70,9 +74,14 @@ public class FamilyController {
     }
 
     @GetMapping("/{family_id}")
-    public Family getFamily(@PathVariable Long family_id) {
+    public ResponseEntity<FamilyDTO> getFamily(@PathVariable Long family_id) {
         // 가족 정보 가져오기
-        return family_service.getFamily(family_id);
+        try {
+            FamilyDTO family = family_service.getFamily(family_id);
+            return ResponseEntity.ok(family);
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 
     @GetMapping("/{family_id}/members")
