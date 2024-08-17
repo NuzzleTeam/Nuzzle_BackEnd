@@ -1,10 +1,14 @@
 package com.nuzzle.backend.family.controller;
 
 import com.nuzzle.backend.family.domain.Family;
+import com.nuzzle.backend.family.dto.FamilyDTO;
 import com.nuzzle.backend.family.service.FamilyService;
+import com.nuzzle.backend.pet.domain.PetColor;
 import com.nuzzle.backend.user.domain.User;
 import com.nuzzle.backend.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -98,5 +102,12 @@ public class FamilyController {
         response.put("invitation_code", invitation_code);
 
         return response;
+    }
+
+    // 가족별 펫 색상 설정
+    @PostMapping("/{familyId}/pet-color")
+    public ResponseEntity<FamilyDTO> setPetColor(@PathVariable Long familyId, @RequestBody PetColor petColor) {
+        FamilyDTO familyDTO = family_service.setPetColor(familyId, petColor);
+        return ResponseEntity.status(HttpStatus.CREATED).body(familyDTO);
     }
 }
