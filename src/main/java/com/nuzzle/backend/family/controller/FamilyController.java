@@ -6,7 +6,6 @@ import com.nuzzle.backend.user.domain.User;
 import com.nuzzle.backend.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -94,17 +93,14 @@ public class FamilyController {
     }
 
     @GetMapping("/{family_id}/invitation-code")
-    public ResponseEntity<Map<String, String>> getInvitationCode(@PathVariable Long family_id) {
+    public Map<String, String> getInvitationCode(@PathVariable Long family_id) {
         // 가족 초대 코드 가져오기
-        try {
-            String invitation_code = family_service.getInvitationCode(family_id);
+        String invitation_code = family_service.getInvitationCode(family_id);
 
-            Map<String, String> response = new HashMap<>();
-            response.put("invitation_code", invitation_code);
+        // 응답 데이터 생성
+        Map<String, String> response = new HashMap<>();
+        response.put("invitation_code", invitation_code);
 
-            return ResponseEntity.ok(response);
-        } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        }
+        return response;
     }
 }
