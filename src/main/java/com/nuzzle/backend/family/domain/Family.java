@@ -9,6 +9,7 @@ import com.nuzzle.backend.pet.domain.PetColor;
 import com.nuzzle.backend.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Data;
+
 import java.util.List;
 
 @Entity

@@ -1,6 +1,5 @@
 package com.nuzzle.backend.pet.domain;
 
-import com.nuzzle.backend.family.domain.Family;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,6 +19,4 @@ public class Pet {
     @Column(name = "pet_img")
     private String petImg;
 
-    @OneToMany(mappedBy = "pet")
-    private List<Family> families;
 }

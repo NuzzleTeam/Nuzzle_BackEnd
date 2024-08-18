@@ -4,7 +4,10 @@ import com.nuzzle.backend.family.domain.Family;
 import com.nuzzle.backend.family.dto.FamilyDTO;
 import com.nuzzle.backend.family.repository.FamilyRepository;
 import com.nuzzle.backend.family.service.FamilyService;
+import com.nuzzle.backend.pet.domain.Pet;
+import com.nuzzle.backend.pet.domain.PetColor;
 import com.nuzzle.backend.pet.dto.PetDTO;
+import com.nuzzle.backend.pet.service.PetService;
 import com.nuzzle.backend.user.domain.User;
 import com.nuzzle.backend.user.dto.UserDTO;
 import com.nuzzle.backend.user.repository.UserRepository;
@@ -23,11 +26,19 @@ public class FamilyServiceImpl implements FamilyService {
     private FamilyRepository familyRepository;
 
     @Autowired
+    private PetService petService;
+
+    @Autowired
     private UserRepository userRepository;
 
     @Transactional
     @Override
-    public Family createFamily(User user) {
+    public FamilyDTO createFamily(User user) {
+        // 이미 가족이 있는 경우 예외 발생
+        if (user.getFamily() != null) {
+            throw new IllegalStateException("이미 가족이 있는 유저입니다.");
+        }
+
         // 새로운 가족 생성
         Family family = new Family();
         family.setFamilyStatus("Active"); // 가족 상태 설정
@@ -38,28 +49,28 @@ public class FamilyServiceImpl implements FamilyService {
         user.setFamily(family);
         userRepository.save(user);
 
-        return family;
+        return convertToDTO(family);
     }
 
     @Transactional
     @Override
-    public Family joinFamily(User user, String invitationCode) {
+    public FamilyDTO joinFamily(User user, String invitationCode) {
         // 이미 가족이 있는 경우 예외 발생
         if (user.getFamily() != null) {
-            throw new IllegalStateException("User is already in a family");
+            throw new IllegalStateException("이미 가족이 있는 유저입니다.");
         }
 
         // 초대 코드로 가족 찾기
         Optional<Family> family = familyRepository.findByInvitationCode(invitationCode);
         if (!family.isPresent()) {
-            throw new IllegalArgumentException("Invalid invitation code");
+            throw new IllegalArgumentException("잘못된 코드입니다.");
         }
 
         // 유저를 가족에 할당
         user.setFamily(family.get());
         userRepository.save(user);
 
-        return family.get();
+        return convertToDTO(family.get());
     }
 
     @Transactional
@@ -67,7 +78,7 @@ public class FamilyServiceImpl implements FamilyService {
     public void leaveFamily(User user) {
         // 유저가 가족에 속해 있지 않은 경우 예외 발생
         if (user.getFamily() == null) {
-            throw new IllegalStateException("User is not in a family");
+            throw new IllegalStateException("소속된 가족이 없어 탈퇴할 수 없습니다.");
         }
 
         // 유저를 가족에서 제거
@@ -83,6 +94,7 @@ public class FamilyServiceImpl implements FamilyService {
     }
 
 
+
     @Override
     public String getInvitationCode(Long familyId) {
         // 가족 ID로 초대 코드 가져오기
@@ -90,7 +102,56 @@ public class FamilyServiceImpl implements FamilyService {
         return family.getInvitationCode();
     }
 
-    //----------------------DTO 변환용 메소드 -------------------------------------
+    @Transactional
+    @Override
+    public FamilyDTO setPetName(Long familyId, String petName) {
+        Family family = familyRepository.findById(familyId)
+                .orElseThrow(() -> new IllegalArgumentException("가족을 찾을 수 없습니다."));
+        family.setPetName(petName);
+        familyRepository.save(family);
+        return convertToDTO(family);
+    }
+
+    @Transactional
+    @Override
+    public FamilyDTO updatePetName(Long familyId, String petName) {
+        return setPetName(familyId, petName); // 이름 설정 로직과 동일
+    }
+
+    @Transactional
+    @Override
+    public FamilyDTO setPetColor(Long familyId, PetColor petColor) {
+        Family family = familyRepository.findById(familyId)
+                .orElseThrow(() -> new IllegalArgumentException("가족을 찾을 수 없습니다."));
+        family.setPetColor(petColor);
+        familyRepository.save(family);
+        return convertToDTO(family);
+    }
+
+    @Transactional
+    @Override
+    public FamilyDTO updatePetColor(Long familyId, PetColor petColor) {
+        return setPetColor(familyId, petColor); // 색상 설정 로직과 동일
+    }
+
+    @Transactional
+    @Override
+    public FamilyDTO assignRandomPetToFamily(Long familyId) {
+        Family family = familyRepository.findById(familyId)
+                .orElseThrow(() -> new IllegalArgumentException("가족을 찾을 수 없습니다."));
+
+        PetDTO randomPet = petService.getRandomPetType();
+        Pet pet = new Pet();
+        pet.setPetId(randomPet.getPetId());
+        pet.setPetType(randomPet.getPetType());
+        pet.setPetImg(randomPet.getPetImg());
+
+        family.setPet(pet);
+        familyRepository.save(family);
+
+        return convertToDTO(family);
+    }
+//----------------------DTO 변환용 메소드 -------------------------------------
     private FamilyDTO convertToDTO(Family family) {
         FamilyDTO familyDTO = new FamilyDTO();
         familyDTO.setFamilyId(family.getFamilyId());
@@ -122,7 +183,7 @@ public class FamilyServiceImpl implements FamilyService {
         userDTO.setGender(user.getGender());
         userDTO.setSerialId(user.getSerialId());
         userDTO.setPassword(user.getPassword());
-        userDTO.setRole(user.getRole());
+        userDTO.setRole(user.getRole().name());
         userDTO.setBirthDate(user.getBirthDate().toString());
 
         // 사용자 DTO는 Family를 포함하지 않음

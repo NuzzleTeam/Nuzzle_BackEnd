@@ -1,6 +1,5 @@
 package com.nuzzle.backend.user.dto;
 
-import com.nuzzle.backend.family.dto.FamilyDTO;
 import lombok.Data;
 
 @Data
@@ -12,5 +11,4 @@ public class UserDTO {
     private String password;
     private String role;
     private String birthDate;
-    private FamilyDTO family;
 }

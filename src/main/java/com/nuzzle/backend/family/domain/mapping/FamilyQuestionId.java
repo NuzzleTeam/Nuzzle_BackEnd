@@ -1,7 +1,7 @@
 package com.nuzzle.backend.family.domain.mapping;
 
-import jakarta.persistence.Embeddable;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
