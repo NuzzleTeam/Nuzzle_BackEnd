@@ -9,11 +9,7 @@ import java.util.List;
 @Data
 public class Alarm {
     @Id
-<<<<<<< HEAD
-    @GeneratedValue(strategy = GenerationType.AUTO)
-=======
     @GeneratedValue(strategy = GenerationType.IDENTITY)
->>>>>>> c9f35ada6c60f5934cc32d4d0762fd6c01719896
     @Column(name = "alarm_id")
     private Long alarmId;
 

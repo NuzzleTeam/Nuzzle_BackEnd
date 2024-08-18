@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 //package com.nuzzle.backend.global.intercepter;
 //
 //import jakarta.servlet.http.HttpServletRequest;
@@ -15,7 +15,7 @@
 //        return HandlerInterceptor.super.preHandle(request, response, handler);
 //    }
 //}
-=======
+
 package com.nuzzle.backend.global.intercepter;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,4 +32,3 @@ public class UserIdInterceptor implements HandlerInterceptor {
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 }
->>>>>>> c9f35ada6c60f5934cc32d4d0762fd6c01719896

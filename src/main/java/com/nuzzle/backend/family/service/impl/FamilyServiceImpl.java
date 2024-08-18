@@ -132,7 +132,7 @@ public class FamilyServiceImpl implements FamilyService {
         userDTO.setGender(user.getGender());
         userDTO.setSerialId(user.getSerialId());
         userDTO.setPassword(user.getPassword());
-        userDTO.setRole(user.getRole());
+//        userDTO.setRole(user.getRole());
         userDTO.setBirthDate(user.getBirthDate().toString());
 
         // 사용자 DTO는 Family를 포함하지 않음
