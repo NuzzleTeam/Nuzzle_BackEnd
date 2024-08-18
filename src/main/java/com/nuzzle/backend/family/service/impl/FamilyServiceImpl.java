@@ -1,12 +1,18 @@
 package com.nuzzle.backend.family.service.impl;
 
 import com.nuzzle.backend.family.domain.Family;
+<<<<<<< HEAD
 import com.nuzzle.backend.family.dto.FamilyDTO;
 import com.nuzzle.backend.family.repository.FamilyRepository;
 import com.nuzzle.backend.family.service.FamilyService;
 import com.nuzzle.backend.pet.dto.PetDTO;
 import com.nuzzle.backend.user.domain.User;
 import com.nuzzle.backend.user.dto.UserDTO;
+=======
+import com.nuzzle.backend.family.repository.FamilyRepository;
+import com.nuzzle.backend.family.service.FamilyService;
+import com.nuzzle.backend.user.domain.User;
+>>>>>>> 0fea6e0a7e3363f534cc21777b34438b51ee72c1
 import com.nuzzle.backend.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +21,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+<<<<<<< HEAD
 import java.util.stream.Collectors;
+=======
+>>>>>>> 0fea6e0a7e3363f534cc21777b34438b51ee72c1
 
 @Service
 public class FamilyServiceImpl implements FamilyService {
@@ -27,12 +36,16 @@ public class FamilyServiceImpl implements FamilyService {
 
     @Transactional
     @Override
+<<<<<<< HEAD
     public FamilyDTO createFamily(User user) {
         // 이미 가족이 있는 경우 예외 발생
         if (user.getFamily() != null) {
             throw new IllegalStateException("이미 가족이 있는 유저입니다.");
         }
 
+=======
+    public Family createFamily(User user) {
+>>>>>>> 0fea6e0a7e3363f534cc21777b34438b51ee72c1
         // 새로운 가족 생성
         Family family = new Family();
         family.setFamilyStatus("Active"); // 가족 상태 설정
@@ -43,7 +56,11 @@ public class FamilyServiceImpl implements FamilyService {
         user.setFamily(family);
         userRepository.save(user);
 
+<<<<<<< HEAD
         return convertToDTO(family);
+=======
+        return family;
+>>>>>>> 0fea6e0a7e3363f534cc21777b34438b51ee72c1
     }
 
     @Transactional
@@ -72,7 +89,11 @@ public class FamilyServiceImpl implements FamilyService {
     public void leaveFamily(User user) {
         // 유저가 가족에 속해 있지 않은 경우 예외 발생
         if (user.getFamily() == null) {
+<<<<<<< HEAD
             throw new IllegalStateException("소속된 가족이 없어 탈퇴할 수 없습니다.");
+=======
+            throw new IllegalStateException("User is not in a family");
+>>>>>>> 0fea6e0a7e3363f534cc21777b34438b51ee72c1
         }
 
         // 유저를 가족에서 제거
@@ -96,6 +117,7 @@ public class FamilyServiceImpl implements FamilyService {
     @Override
     public String getInvitationCode(Long familyId) {
         // 가족 ID로 초대 코드 가져오기
+<<<<<<< HEAD
         Family family = familyRepository.findById(familyId).orElseThrow(() -> new IllegalArgumentException("가족을 찾지 못했습니다."));
         return family.getInvitationCode();
     }
@@ -138,4 +160,9 @@ public class FamilyServiceImpl implements FamilyService {
         // 사용자 DTO는 Family를 포함하지 않음
         return userDTO;
     }
+=======
+        Family family = getFamily(familyId);
+        return family.getInvitationCode();
+    }
+>>>>>>> 0fea6e0a7e3363f534cc21777b34438b51ee72c1
 }

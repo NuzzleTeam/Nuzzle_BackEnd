@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0fea6e0a7e3363f534cc21777b34438b51ee72c1
 package com.nuzzle.backend.global.exception;
 
 import com.nuzzle.backend.global.dto.ResponseDto;
