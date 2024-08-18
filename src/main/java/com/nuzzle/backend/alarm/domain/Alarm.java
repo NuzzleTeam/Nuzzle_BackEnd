@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 public class Alarm {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "alarm_id")
     private Long alarmId;
 

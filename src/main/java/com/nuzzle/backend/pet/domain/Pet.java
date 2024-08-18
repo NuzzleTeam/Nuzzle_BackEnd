@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 public class Pet {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "pet_id")
     private Long petId;
 
