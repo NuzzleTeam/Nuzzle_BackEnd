@@ -1,7 +1,6 @@
 package com.nuzzle.backend.user.domain;
 
 import com.nuzzle.backend.answer.domain.Answer;
-import com.nuzzle.backend.family.domain.Family;
 import com.nuzzle.backend.global.dto.type.EFamilyRole;
 import com.nuzzle.backend.global.dto.type.EProvider;
 import com.nuzzle.backend.global.dto.type.ERole;
@@ -31,9 +30,6 @@ public class User {
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
-    @ManyToOne
-    @JoinColumn(name = "family_id")
-    private Family family;
 
     @OneToMany(mappedBy = "user")
     private List<Answer> answers;
@@ -80,8 +76,7 @@ public class User {
     private LocalDateTime createdAt;
 
     @Builder
-    public User(Family family, List<Answer> answers, List<Picture> pictures, String userName, String gender, String serialId, String password, LocalDate birthDate, String refreshToken, EProvider provider, EFamilyRole familyRole, ERole role) {
-        this.family = family;
+    public User(List<Answer> answers, List<Picture> pictures, String userName, String gender, String serialId, String password, LocalDate birthDate, String refreshToken, EProvider provider, EFamilyRole familyRole, ERole role) {
         this.answers = answers;
         this.pictures = pictures;
         this.userName = userName;
