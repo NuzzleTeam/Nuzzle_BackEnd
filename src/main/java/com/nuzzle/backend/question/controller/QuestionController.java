@@ -39,7 +39,6 @@ public class QuestionController {
         }
     }
 
-    // GetMapping 어노테이션을 사용하여 HTTP GET 요청을 '/hello' 경로로 매핑
     @GetMapping("/hello")
     public String sayHello() {
         // 요청을 받으면 "Hello, World!" 문자열을 반환
