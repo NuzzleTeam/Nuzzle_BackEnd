@@ -65,20 +65,16 @@ public class FamilyController {
     }
 
     @PostMapping("/leave")
-    public ResponseEntity<Map<String, String>> leaveFamily(@RequestBody FamilyDTO.LeaveFamilyRequest request) {
+    public Map<String, String> leaveFamily(@RequestParam Long user_id) {
         // 유저 정보 가져오기
-        User user = user_service.getUserById(request.getUserId());
+        User user = user_service.getUserById(user_id);
+        // 가족 탈퇴
+        family_service.leaveFamily(user);
 
+        // 응답 메시지 생성
         Map<String, String> response = new HashMap<>();
-        try {
-            // 가족 탈퇴
-            family_service.leaveFamily(user);
-            response.put("message", "성공적으로 가족을 탈퇴했습니다.");
-            return ResponseEntity.ok(response);
-        } catch (IllegalStateException e) {
-            response.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
+        response.put("message", "Successfully left the family.");
+        return response;
     }
 
     @GetMapping("/{family_id}")
