@@ -27,13 +27,8 @@ import java.util.Objects;
 public class User {
 
     @Id
-<<<<<<< HEAD
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id")
-=======
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
->>>>>>> 9ed948bfd39806d0bb5f8399442f6491bd166552
     private Long userId;
 
     @ManyToOne

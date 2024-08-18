@@ -3,6 +3,7 @@ package com.nuzzle.backend.family.domain;
 import com.nuzzle.backend.family.domain.mapping.FamilyKeyword;
 import com.nuzzle.backend.family.domain.mapping.FamilyQuestion;
 import com.nuzzle.backend.pet.domain.Pet;
+import com.nuzzle.backend.pet.domain.PetColor;
 import com.nuzzle.backend.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -12,15 +13,16 @@ import java.util.List;
 @Data
 public class Family {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "family_id")
     private Long familyId;
 
     @Column(name = "pet_name")
     private String petName;
 
+    @Enumerated(EnumType.STRING) // EnumType.STRING으로 지정
     @Column(name = "pet_color")
-    private String petColor;
+    private PetColor petColor;
 
     @Column(name = "family_status")
     private String familyStatus;

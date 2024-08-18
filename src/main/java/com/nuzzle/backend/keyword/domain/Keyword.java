@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 public class Keyword {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "keyword_id")
     private Long keywordId;
 
