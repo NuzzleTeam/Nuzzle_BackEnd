@@ -1,13 +1,10 @@
 package com.nuzzle.backend.family.controller;
 
 import com.nuzzle.backend.family.domain.Family;
-import com.nuzzle.backend.family.dto.FamilyDTO;
 import com.nuzzle.backend.family.service.FamilyService;
 import com.nuzzle.backend.user.domain.User;
 import com.nuzzle.backend.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -25,25 +22,21 @@ public class FamilyController {
     private UserService user_service;
 
     @PostMapping("/create")
-    public ResponseEntity<Map<String, Object>> createFamily(@RequestBody FamilyDTO.CreateFamilyRequest request) {
+    public Map<String, Object> createFamily(@RequestParam Long user_id) {
         // 유저 정보 가져오기
-        User user = user_service.getUserById(request.getUserId());
+        User user = user_service.getUserById(user_id);
+        // 가족 생성
+        Family family = family_service.createFamily(user);
 
         // 응답 데이터 생성
         Map<String, Object> response = new HashMap<>();
-        try {
-            // 가족 생성
-            FamilyDTO family = family_service.createFamily(user);
-            response.put("family_id", family.getFamilyId());
-            response.put("pet_name", family.getPetName()); // pet_name은 null일 수 있음
-            response.put("pet_color", family.getPetColor()); // pet_color는 null일 수 있음
-            response.put("invitation_code", family.getInvitationCode());
-            response.put("family_status", family.getFamilyStatus());
-            return ResponseEntity.ok(response);
-        } catch (IllegalStateException e) {
-            response.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
-        }
+        response.put("family_id", family.getFamilyId());
+        response.put("pet_name", family.getPetName()); // pet_name은 null일 수 있음
+        response.put("pet_color", family.getPetColor()); // pet_color는 null일 수 있음
+        response.put("invitation_code", family.getInvitationCode());
+        response.put("family_status", family.getFamilyStatus());
+
+        return response;
     }
 
     @PostMapping("/join")
