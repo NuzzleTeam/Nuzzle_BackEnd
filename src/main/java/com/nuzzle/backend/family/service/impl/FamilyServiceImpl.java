@@ -72,7 +72,7 @@ public class FamilyServiceImpl implements FamilyService {
     public void leaveFamily(User user) {
         // 유저가 가족에 속해 있지 않은 경우 예외 발생
         if (user.getFamily() == null) {
-            throw new IllegalStateException("User is not in a family");
+            throw new IllegalStateException("소속된 가족이 없어 탈퇴할 수 없습니다.");
         }
 
         // 유저를 가족에서 제거
