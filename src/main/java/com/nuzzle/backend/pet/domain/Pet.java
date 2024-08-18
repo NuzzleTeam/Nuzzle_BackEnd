@@ -1,5 +1,7 @@
 package com.nuzzle.backend.pet.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.nuzzle.backend.family.domain.Family;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,5 +20,9 @@ public class Pet {
 
     @Column(name = "pet_img")
     private String petImg;
+
+    @OneToMany(mappedBy = "pet")
+    @JsonManagedReference
+    private List<Family> families;
 
 }
