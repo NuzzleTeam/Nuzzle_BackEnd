@@ -2,12 +2,13 @@ package com.nuzzle.backend.question.domain;
 
 import com.nuzzle.backend.family.domain.mapping.FamilyQuestion;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,5 +19,7 @@ public class Question {
     private String questionContents;
 
     @OneToMany(mappedBy = "question")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<FamilyQuestion> familyQuestions;
 }

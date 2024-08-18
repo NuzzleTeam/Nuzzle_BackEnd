@@ -1,5 +1,6 @@
 package com.nuzzle.backend.answer.domain;
 
+import com.nuzzle.backend.question.domain.Question;
 import com.nuzzle.backend.user.domain.User;
 import com.nuzzle.backend.family.domain.mapping.FamilyQuestion;
 import jakarta.persistence.*;
@@ -33,4 +34,17 @@ public class Answer {
 
     @Column(name = "answer_status")
     private Boolean answerStatus;
+
+    public void setQuestion(Question question) {
+
+    }
+
+    public void setContent(String content) {
+    }
+
+    public void setCreatedAt(LocalDateTime now) {
+    }
+
+    public void setAnswer(String answerText) {
+    }
 }

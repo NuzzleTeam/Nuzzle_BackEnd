@@ -99,13 +99,4 @@ public class FamilyController {
 
         return response;
     }
-
-    @GetMapping( "/hello")
-    public String doGetHelloWorld() {
-
-        return "Hello World";
-    }
-
-
-
 }
