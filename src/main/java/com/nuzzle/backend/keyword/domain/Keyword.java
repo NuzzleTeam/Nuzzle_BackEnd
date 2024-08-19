@@ -1,5 +1,6 @@
 package com.nuzzle.backend.keyword.domain;
 
+import com.nuzzle.backend.family.domain.mapping.FamilyKeyword;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,5 +16,8 @@ public class Keyword {
 
     @Column(name = "keyword")
     private String keyword;
+
+    @OneToMany(mappedBy = "keyword")
+    private List<FamilyKeyword> familyKeywords;
 
 }

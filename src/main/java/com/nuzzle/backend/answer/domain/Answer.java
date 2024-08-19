@@ -1,5 +1,6 @@
 package com.nuzzle.backend.answer.domain;
 
+import com.nuzzle.backend.family.domain.mapping.FamilyQuestion;
 import com.nuzzle.backend.question.domain.Question;
 import com.nuzzle.backend.user.domain.User;
 import jakarta.persistence.*;
@@ -22,6 +23,17 @@ public class Answer {
 
     @Column(name = "answer_status")
     private Boolean answerStatus;
+
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name = "question_id", referencedColumnName = "question_id"),
+            @JoinColumn(name = "family_id", referencedColumnName = "family_id")
+    })
+    private FamilyQuestion familyQuestion;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public void setQuestion(Question question) {
 
