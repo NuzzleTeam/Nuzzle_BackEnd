@@ -29,7 +29,12 @@ public class EmojiServiceImpl implements EmojiService {
     @Autowired
     private UserRepository userRepository;
 
-
+    @Override
+    public List<EmojiDto> findAllEmojis() {
+        return emojiRepository.findAll().stream()
+                .map(emoji -> new EmojiDto(emoji.getEmojiId(), emoji.getEmojiImg()))
+                .collect(Collectors.toList());
+    }
     @Override
     public List<EmojiDto> findRecentEmojisByUser(Long userId, int count) {
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
@@ -59,6 +64,9 @@ public class EmojiServiceImpl implements EmojiService {
 
         return recentEmojis;
     }
-
+    @Override
+    public Emoji saveEmoji(Emoji emoji) {
+        return emojiRepository.save(emoji);
+    }
 
 }
