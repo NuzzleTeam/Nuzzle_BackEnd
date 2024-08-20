@@ -29,7 +29,7 @@ public class Picture {
 
     @OneToMany(mappedBy = "picture")
     private List<PictureEmoji> pictureEmojis;
-    
+
     public Picture(String fileName, String fileType, long size) {
         this.fileName = fileName;
         this.fileType = fileType;
