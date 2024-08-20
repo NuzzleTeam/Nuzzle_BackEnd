@@ -47,8 +47,8 @@ public class EmojiController {
                 pictureEmoji.getPictureEmojiId(),
                 pictureEmoji.getEmoji().getEmojiId(),
                 pictureEmoji.getEmoji().getEmojiImg(),
-                pictureEmoji.getPicture().getId(),
-                pictureEmoji.getPicture().getPictureURL(),
+                pictureEmoji.getPicture().getId(),  // 변경된 필드 사용
+                pictureEmoji.getPicture().getFileName(),  // pictureURL 대신 fileName 사용
                 pictureEmoji.getUser().getUserId(),
                 pictureEmoji.getUser().getUserName()
         );
