@@ -1,5 +1,6 @@
 package com.nuzzle.backend.global.config;
 
+import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -46,7 +47,15 @@ public class SwaggerConfig {
                 .components(new Components())
                 .info(apiInfo())
                 .addSecurityItem(securityRequirement)
-                .components(components);
+                .components(components)
+                .servers(List.of(
+                        new io.swagger.v3.oas.models.servers.Server()
+                                .url("http://localhost:8080")
+                                .description("local server"),
+                        new io.swagger.v3.oas.models.servers.Server()
+                                .url("https://nuz2le.com")
+                                .description("remote server"))
+                );
     }
 
     private Info apiInfo() {
