@@ -29,7 +29,7 @@ public class PictureController {
         this.photoService = photoService;
     }
 
-    @PostMapping("picture")
+    @PostMapping("/picture")
     public ResponseEntity<String> uploadPhoto(@RequestPart("file") MultipartFile file) {
         try {
             // S3에 저장할 때 사용한 파일 이름을 반환받음
