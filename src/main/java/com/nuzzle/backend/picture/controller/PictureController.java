@@ -20,7 +20,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 @RestController
-@RequestMapping("/api/photos")
+@RequestMapping("/api/v1")
 public class PictureController {
 
     private final PictureService photoService;
@@ -29,7 +29,7 @@ public class PictureController {
         this.photoService = photoService;
     }
 
-    @PostMapping("")
+    @PostMapping("picture")
     public ResponseEntity<String> uploadPhoto(@RequestPart("file") MultipartFile file) {
         try {
             // S3에 저장할 때 사용한 파일 이름을 반환받음
@@ -38,7 +38,7 @@ public class PictureController {
             // 반환된 파일 이름으로 URI 생성
             String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                     .scheme("https")  // HTTPS로 강제 설정
-                    .path("/uploads/")
+                    .path("/pictures/")
                     .path(storedFileName)  // 저장된 파일 이름으로 URI 생성
                     .toUriString();
 
@@ -49,7 +49,7 @@ public class PictureController {
     }
 
 
-    @GetMapping("/uploads/{filename:.+}")
+    @GetMapping("/picture/{filename:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
         try {
             // 파일 이름을 UTF-8로 디코딩
