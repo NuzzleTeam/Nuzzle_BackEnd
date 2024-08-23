@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum EFamilyRole {
     PARENT("PARENT"),
-    CHILDREN("CHILDREN"),
+    CHILD("CHILD"),
     ETC("ETC");
 
     private final String value;
