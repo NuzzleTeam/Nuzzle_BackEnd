@@ -31,12 +31,4 @@ public class WebMVCConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns(Constants.NO_NEED_AUTH_URLS);
     }
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000", "https://nuz2le.com", "https://api.nuz2le.com") // 허용할 출처 : 특정 도메인만 받을 수 있음
-                .allowedMethods("GET", "POST", "PATCH", "DELETE") // 허용할 HTTP method
-                .allowCredentials(true); // 쿠키 인증 요청 허용
-    }
 }
