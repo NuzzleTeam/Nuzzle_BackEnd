@@ -17,9 +17,6 @@ public class S3Config {
     @Value("${spring.cloud.aws.credentials.secretKey}")
     private String secretKey;
 
-    @Value("${spring.cloud.aws.s3.region}")
-    private String region;
-
     @Bean
     public AmazonS3Client amazonS3Client() {
         BasicAWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
