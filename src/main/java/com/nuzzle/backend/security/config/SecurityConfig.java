@@ -27,6 +27,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
@@ -73,6 +74,7 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(registry ->
                         registry
+                                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                                 .requestMatchers(Constants.NO_NEED_AUTH_URLS.toArray(String[]::new)).permitAll()
                                 .requestMatchers(Constants.USER_URLS.toArray(String[]::new)).hasRole("USER")
                                 .anyRequest().authenticated()
