@@ -18,6 +18,7 @@ public class Constants {
             "api/v1/oauth/login",
             "/api/v1/oauth2/sign-up",
             "/api/v1/auth/sign-up",
+            "/api/v1/auth/login",
             "/oauth2/authorization/kakao",
             "/oauth2/authorization/google",
             "/login/oauth2/code/kakao",
