@@ -1,6 +1,7 @@
 ## 🐰 NUZZLE BACKEND REPOSITORY
-<br>
 ![Slide 16_9 - 23](https://github.com/user-attachments/assets/b8f32f85-ed7e-45c1-8b13-fee73e3319d0)
+
+## About Our Service
 
 ## Branch Strategy
 -   feat : 새로운 기능 추가
