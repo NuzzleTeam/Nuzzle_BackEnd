@@ -1,6 +1,16 @@
 ## 🐰 NUZZLE BACKEND REPOSITORY
 HELLO! This is NUZZLE BACKEND REPOSITORY
+<br>
+![Slide 16_9 - 23](https://github.com/user-attachments/assets/b8f32f85-ed7e-45c1-8b13-fee73e3319d0)
 
+## Branch Strategy
+-   feat : 새로운 기능 추가
+-   fix : 버그 수정
+-   docs : 문서 수정
+-   style : 코드 포맷팅, 세미콜론 누락, 코드 변경이 없는 경우
+-   refactor: 코드 리펙토링
+-   test: 테스트 코드, 리펙토링 테스트 코드 추가
+-   chore : 빌드 업무 수정, 패키지 매니저 수정
 ## Commit Convention
 -   feat : 새로운 기능 추가
 -   fix : 버그 수정
