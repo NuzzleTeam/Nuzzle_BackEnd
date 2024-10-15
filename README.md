@@ -3,6 +3,7 @@
 
 ## Branch Strategy
 -   GitHub Flow
+<img width="834" alt="image" src="https://github.com/user-attachments/assets/a4dfff35-cb9c-4da9-a03a-90ffbde01713">
   
 ## Commit Convention
 -   feat : 새로운 기능 추가
